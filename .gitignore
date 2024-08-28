@@ -41,8 +41,7 @@
 /vendor/bundle
 
 # Ignore bin directory files, but keep the directory
-/bin/*
-!/bin/.keep
+
 
 # Optionally, you can explicitly keep certain bin files if needed
 # !/bin/rails
