@@ -1,2 +1,1 @@
-# すべてのファイルをCRLFに統一
-* text eol=crlf
+* text=auto
