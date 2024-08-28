@@ -7,3 +7,7 @@ db/schema.rb linguist-generated
 vendor/* linguist-vendored
 config/credentials/*.yml.enc diff=rails_credentials
 config/credentials.yml.enc diff=rails_credentials
+* text=auto
+*.tsx text eol=crlf
+*.yml text eol=crlf
+Dockerfile.dev text eol=crlf
