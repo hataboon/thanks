@@ -1,37 +1,26 @@
-import React from 'react'  // Reactライブラリをインポート
-
-import {
-  Modal as ChakraModal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button
-} from "@chakra-ui/react";
+import React from 'react'
 
 type Props = {
-  isOpen: boolean
-  onClose: () => void;
-  title: string;
   children: React.ReactNode;
+  modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-const Modal: Rdoueact.FC<Props> = ({ isOpen, onClose, title, children }) => {
+const Modal: React.FC<Props> = ({ children, modalRef }) => {
   return (
-    <ChakraModal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{title}</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>{children}</ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </ChakraModal>
-  );
-};
+    <dialog ref={modalRef} className="modal">
+      <div className="modal-box">
+        {children}
+        <form method="dialog">
+          <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
+            ✕
+          </button>
+        </form>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  )
+}
+
+export default Modal;
