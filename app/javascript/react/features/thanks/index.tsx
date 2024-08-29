@@ -29,7 +29,7 @@ export default function Thanks() {
       <div className="mb-4">
         <label htmlFor="category" className="block mb-2">なにに：</label>
         <select 
-          id="category" 
+          id="category"
           className="w-full p-2 border rounded bg-white"
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -41,7 +41,7 @@ export default function Thanks() {
         </select>
       </div>
       <textarea 
-        className="w-full p-2 border rounded mb-4 bg-white" 
+        className="w-full p-2 border rounded mb-4 bg-white"
         rows={4} 
         placeholder="感謝の内容を入力してください"
       ></textarea>
