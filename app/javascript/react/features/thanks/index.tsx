@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // React と useState フックをインポート
+import React, { useState, useEffect } from "react"; // React と useState フックをインポート
 import { Entry, Category } from "./types"; // 型定義をインポート
 import Modal from "../../components/Modal"; // モーダルコンポーネントをインポート
 import useModal from "./useModal"; // カスタム useModal フックをインポート
@@ -6,13 +6,7 @@ import DiaryEntry from "./../../components/DiaryEntry";  // 新しく追加
 
 
 // 初期エントリーデータ
-const initialEntries: Entry[] = [
-  { id: 1, content: '家族の健康に感謝', date: '2024-03-01', category: '家族' },
-  { id: 2, content: '仕事で新しいスキルを学べたことに感謝', date: '2024-03-02', category: '仕事' },
-  { id: 3, content: '友人との楽しい時間に感謝', date: '2024-03-03', category: '友人' },
-  { id: 4, content: '今日の晴れた天気に感謝', date: '2024-03-04', category: '自然' },
-  { id: 5, content: '美味しい食事に感謝', date: '2024-03-05', category: '食事' },
-];
+const initialEntries: Entry[] = [];
 
 // 初期カテゴリーデータ
 const initialCategories: Category[] = [
@@ -23,8 +17,14 @@ const initialCategories: Category[] = [
   { id: 5, name: '食事' },
 ];
 
-export default function Thanks() { // Thanks コンポーネントの定義
-  const [entries, setEntries] = useState<Entry[]>(initialEntries); // エントリーの状態を管理
+export default function Thanks() { // Thanks コンポーネントの定義、以下フックを使用
+  const [entries, setEntries] = useState<Entry[]>(() => {
+    const savedEntries = localStorage.getItem('diaryEntries');
+    return savedEntries ? JSON.parse(savedEntries) : [];
+  }); // エントリーの状態を管理
+  useEffect(() => {
+    localStorage.setItem('diaryEntries', JSON.stringify(entries));
+  }, [entries]);
   const [categories] = useState<Category[]>(initialCategories); // カテゴリーの状態を管理（更新しないので setter は省略）
   const [selectedCategory, setSelectedCategory] = useState<string>(""); // 選択されたカテゴリーの状態を管理
   const [newEntryContent, setNewEntryContent] = useState<string>(""); // 新しいエントリーの内容の状態を管理
@@ -47,19 +47,23 @@ export default function Thanks() { // Thanks コンポーネントの定義
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-pink-100 min-h-screen"> {/* メインのコンテナ */}
-      <h1 className="text-2xl font-bold mb-4">感謝日記</h1> {/* タイトル */}
-      <button onClick={openModal} className="bg-blue-500 text-white px-4 py-2 rounded mb-4"> {/* モーダルを開くボタン */}
-        新しい感謝を追加
-      </button>
+    <div className="bg-pink-100 min-h-screen p-4 md:p-8 text-center" > {/* 背景色とパディングを調整 */}
+      <div className="max-w-2xl mx-auto"> {/* 最大幅を設定し、中央寄せ */}
+        <h1 className="text-3xl font-bold mb-6">感謝日記</h1>
+        <button
+          onClick={openModal}
+          className="bg-blue-500 text-white px-6 py-3 rounded-lg mb-8 hover:bg-blue-600 transition-colors"
+        >
+          新しい感謝を追加
+        </button>
 
       <Modal modalRef={modalRef}> {/* モーダルコンポーネント */}
         <h2 className="text-xl font-bold mb-4">新しい感謝を追加</h2> {/* モーダルのタイトル */}
         <div className="mb-4">
-          <label htmlFor="category" className="block mb-2">なにに：</label> {/* カテゴリー選択のラベル */}
+          <label htmlFor="category" className="block mb-2">何に：</label> {/* カテゴリー選択のラベル */}
           <select
             id="category"
-            className="w-full p-2 border rounded bg-white"
+            className="w-full p-2 border rounded bg-white text-center"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)} // カテゴリーが選択されたときの処理
           >
@@ -70,7 +74,7 @@ export default function Thanks() { // Thanks コンポーネントの定義
           </select>
         </div>
         <textarea
-          className="w-full p-2 border rounded mb-4 bg-white"
+          className="w-full p-2 border rounded mb-4 bg-white text-center"
           rows={4}
           placeholder="感謝の内容を入力してください"
           value={newEntryContent}
@@ -79,10 +83,13 @@ export default function Thanks() { // Thanks コンポーネントの定義
         <button onClick={addEntry} className="bg-blue-500 text-white px-4 py-2 rounded">保存</button> {/* エントリーを追加するボタン */}
       </Modal>
 
-      <h2 className="text-xl font-bold mb-4">過去の感謝</h2> {/* 過去のエントリーセクションのタイトル */}
-      {entries.map((entry) => ( // エントリーのリストをマップして表示
-        <DiaryEntry key={entry.id} entry={entry} />  // ここを変更
-      ))}
+      <h2 className="text-2xl font-bold mb-6">過去の感謝</h2>
+        <div className="space-y-4"> {/* グリッドレイアウトを適用 */}
+          {entries.map((entry) => (
+            <DiaryEntry key={entry.id} entry={entry} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

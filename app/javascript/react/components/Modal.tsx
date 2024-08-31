@@ -1,8 +1,8 @@
 import React from 'react'
 
 type Props = {
-  children: React.ReactNode;
-  modalRef: React.RefObject<HTMLDialogElement>;
+  children: React.ReactNode; // モーダル内に表示する内容
+  modalRef: React.RefObject<HTMLDialogElement>; // モーダルのDOM要素への参照
 }
 
 const Modal: React.FC<Props> = ({ children, modalRef }) => {
