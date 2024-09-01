@@ -22,6 +22,7 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
     const savedEntries = localStorage.getItem('diaryEntries');
     return savedEntries ? JSON.parse(savedEntries) : [];
   }); // エントリーの状態を管理
+
   useEffect(() => {
     localStorage.setItem('diaryEntries', JSON.stringify(entries));
   }, [entries]);

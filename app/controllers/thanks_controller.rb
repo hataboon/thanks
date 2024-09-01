@@ -1,29 +1,29 @@
 class ThanksController < ApplicationController
   def index
     @thanks = Thank.order(date: :desc)
-    render json: @thanks
   end
 
   def create
     @thank = Thank.new(thank_params)
     if @thank.save
-      render json: @thank, status: :created
+      redirect_to thanks_path, notice: '感謝が追加されました'
     else
-      render json: @thank.erros, status: :unprocessable_entitiy
+      render :index
     end
   end
 
   def update
     @thank = current_user.thank.find(params[:id])
     if @thank.update(thank_params)
-      render json: @thank
+      redirect_to thanks_path, notice: '感謝が更新されました'
     else
-      render json: @thank.erros, status: :unprocessable_entitiy
-  end
+      render :index
+    end
 
   def destroy
     @thank = current_user.thank.find(params[:id])
     @thank.destroy
+    redirect_to thank_params, notice: '感謝が削除されました'
   end
 
   private
