@@ -30,19 +30,40 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
   const [selectedCategory, setSelectedCategory] = useState<string>(""); // 選択されたカテゴリーの状態を管理
   const [newEntryContent, setNewEntryContent] = useState<string>(""); // 新しいエントリーの内容の状態を管理
   const { modalRef, openModal, closeModal } = useModal(); // useModal フックを使用してモーダルの状態を管理
+  const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
+  const startEditing = (entry: Entry) => { // この関数は編集を開始するときに呼ばれます。
+    setEditingEntry(entry); // 編集中のエントリーを設定します
+    setSelectedCategory(entry.category); // 編集中のエントリーのカテゴリーを選択状態にします。
+    setNewEntryContent(entry.content); // 編集中のエントリーの内容をテキストエリアにセットします。
+    openModal(); // 編集用のモーダルを開きます。
+  };
+
+  const deleteEntry = (id: number) => { // この関数は指定されたIDのエントリーを削除します。
+    setEntries(entries.filter(entry => entry.id !== id)); // 指定されたIDを持つエントリーを除外した新しい配列を作成します。
+  }
   // 新しいエントリーを追加する関数
   const addEntry = () => {
     if (selectedCategory && newEntryContent) { // カテゴリーと内容が入力されている場合
-      const newEntry: Entry = { // 新しいエントリーオブジェクトを作成
-        id: entries.length + 1, // 仮のID生成方法
-        content: newEntryContent,
-        date: new Date().toISOString().split('T')[0], // 現在の日付を YYYY-MM-DD 形式で取得
-        category: selectedCategory
-      };
-      setEntries([newEntry, ...entries]); // 新しいエントリーを既存のリストの先頭に追加
+      if (editingEntry) {
+        const updatedEntries = entries.map(entry =>
+          entry.id === editingEntry.id
+            ? { ...entry, category: selectedCategory, content: newEntryContent }
+            : entry
+        );
+        setEntries(updatedEntries);
+      }else {
+        const newEntry: Entry = { // 新しいエントリーオブジェクトを作成
+          id: entries.length + 1, // 仮のID生成方法
+          content: newEntryContent,
+          date: new Date().toISOString().split('T')[0], // 現在の日付を YYYY-MM-DD 形式で取得
+          category: selectedCategory
+        };
+        setEntries([newEntry, ...entries]); // 新しいエントリーを既存のリストの先頭に追加
+      }
       setSelectedCategory(""); // 選択カテゴリーをリセット
       setNewEntryContent(""); // 入力内容をリセット
+      setEditingEntry(null);
       closeModal(); // モーダルを閉じる
     }
   };
@@ -87,7 +108,7 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
       <h2 className="text-2xl font-bold mb-6">過去の感謝</h2>
         <div className="space-y-4"> {/* グリッドレイアウトを適用 */}
           {entries.map((entry) => (
-            <DiaryEntry key={entry.id} entry={entry} />
+            <DiaryEntry key={entry.id} entry={entry} onEdit={startEditing} onDelete={deleteEntry} />
           ))}
         </div>
       </div>
