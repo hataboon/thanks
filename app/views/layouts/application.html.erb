@@ -18,6 +18,14 @@
   </head>
 
   <body>
+    <div id="flash-messages">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %> fade in">
+          <%= value %>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>

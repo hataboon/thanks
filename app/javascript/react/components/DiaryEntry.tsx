@@ -20,10 +20,9 @@ const DiaryEntry: React.FC<DiaryEntryProps> = ({ entry, onEdit, onDelete }) => {
       >
         編集
         </button>
-        {/*削除ボタン*/}
         <button
           onClick={() => onDelete(entry.id)}
-          className="text-red-500 hover:text-red-700"
+          className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-sm font-sans text-red-700 ring-1 ring-inset ring-red-700/10"
         >
           削除
         </button>
