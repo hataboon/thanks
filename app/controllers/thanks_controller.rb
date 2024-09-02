@@ -19,6 +19,7 @@ class ThanksController < ApplicationController
     else
       render :index
     end
+  end
 
   def destroy
     @thank = current_user.thank.find(params[:id])
