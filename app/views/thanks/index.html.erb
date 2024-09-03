@@ -1,1 +1,2 @@
-<div id="thanks_app"></div>
+<div id="thanks_app" data-thanks="<%= @thanks_json %>"></div>
+<%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
