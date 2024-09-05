@@ -1,10 +1,15 @@
 class ThanksController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
   before_action :set_thank, only: [:edit, :update, :destroy]
 
   def index
-    @thanks = current_user.thanks.order(date: :desc) if current_user
-    @thanks_json = @thanks.to_json if @thanks
+    if current_user
+      @thanks = current_user.thanks.order(date: :desc)
+      @thanks_json = @thanks.to_json
+    else
+      @thanks = []
+      @thanks_json = [].to_json
+    end
   end
 
   def new
