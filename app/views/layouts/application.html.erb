@@ -20,9 +20,9 @@
   <body class="min-h-screen bg-gray-100">
     <%= render 'shared/header' %>
 
-    <div id="flash-messages">
+    <div id="flash-messages" class="container mx-auto mt-4 px-4">
       <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %> fade in">
+        <div class="alert alert-<%= key %> bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4">
           <%= value %>
         </div>
       <% end %>
