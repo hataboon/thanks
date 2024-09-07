@@ -16,7 +16,7 @@ const Header: React.FC = () => {
           </div>
           <div className="flex items-center">
             <div className="relative">
-              <button 
+              <button
                 onClick={toggleMenu}
                 className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
