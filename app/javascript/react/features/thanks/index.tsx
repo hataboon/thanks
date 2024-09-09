@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"; // React と useState フックをインポート
+import { v4 as uuidv4 } from 'uuid'; // UUIDを生成するためのライブラリをインポート
 import { Entry, Category } from "./types"; // 型定義をインポート
 import Modal from "../../components/Modal"; // モーダルコンポーネントをインポート
 import useModal from "./useModal"; // カスタム useModal フックをインポート
@@ -54,7 +55,7 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
         setEntries(updatedEntries);
       }else {
         const newEntry: Entry = { // 新しいエントリーオブジェクトを作成
-          id: entries.length + 1, // 仮のID生成方法
+          id: uuidv4(), // UUIDを使用して一意のIDを生成
           content: newEntryContent,
           date: new Date().toISOString().split('T')[0], // 現在の日付を YYYY-MM-DD 形式で取得
           category: selectedCategory

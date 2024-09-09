@@ -15,6 +15,9 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <script>
+      window.currentUser = <%= user_signed_in? ? 'true' : 'false' %>;
+    </script>
   </head>
 
   <body>

@@ -2,14 +2,17 @@ import React from "react";
 import { createRoot } from "react-dom/client"; //createRoot: React 18から導入された新しいAPIで、Reactアプリケーションのルートを作成します。
 import Thanks from "../features/thanks";
 import Header from "../components/Header";
+import { BrowserRouter as Router } from "react-router-dom"
 
 const App = () => (
-  <div className="min-h-screen bg-gray-100">
-    <Header />
-    <main className="container mx-auto mt-6 px-4">
-      <Thanks />
-    </main>
-  </div>
+  <Router>
+    <div className="min-h-screen bg-gray-100">
+      <Header />
+      <main className="container mx-auto mt-6 px-4">
+        <Thanks />
+      </main>
+    </div>
+  </Router>
 );
 
 const container = document.getElementById("thanks_app");

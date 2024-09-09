@@ -1,5 +1,5 @@
 export interface Entry {
-  id: number;
+  id: string;
   content: string;
   date: string;
   category: string;
