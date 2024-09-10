@@ -19,14 +19,13 @@ const initialCategories: Category[] = [
 ];
 
 export default function Thanks() { // Thanks コンポーネントの定義、以下フックを使用
-  const [entries, setEntries] = useState<Entry[]>(() => {
-    const savedEntries = localStorage.getItem('diaryEntries');
-    return savedEntries ? JSON.parse(savedEntries) : [];
-  }); // エントリーの状態を管理
+  const [entries, setEntries] = useState<Entry[]>([]);
 
   useEffect(() => {
-    localStorage.setItem('diaryEntries', JSON.stringify(entries));
-  }, [entries]);
+    const thanksData = JSON.parse(document.getElementById('thanks_app')?.getAttribute('data-thanks') || '[]');
+    setEntries(thanksData);
+  }, []);
+
   const [categories] = useState<Category[]>(initialCategories); // カテゴリーの状態を管理（更新しないので setter は省略）
   const [selectedCategory, setSelectedCategory] = useState<string>(""); // 選択されたカテゴリーの状態を管理
   const [newEntryContent, setNewEntryContent] = useState<string>(""); // 新しいエントリーの内容の状態を管理
@@ -40,7 +39,7 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
     openModal(); // 編集用のモーダルを開きます。
   };
 
-  const deleteEntry = (id: number) => { // この関数は指定されたIDのエントリーを削除します。
+  const deleteEntry = (id: string) => { // この関数は指定されたIDのエントリーを削除します。
     setEntries(entries.filter(entry => entry.id !== id)); // 指定されたIDを持つエントリーを除外した新しい配列を作成します。
   }
   // 新しいエントリーを追加する関数
