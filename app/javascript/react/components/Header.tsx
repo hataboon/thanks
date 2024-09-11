@@ -36,6 +36,10 @@ const Header: React.FC = () => {
     try {
       const csrfToken = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content;
 
+      if (!csrfToken) {
+        console.error('CSRF token not found');
+        return;
+      }
       // fetchを使ってDELETEリクエストを送信
       const response = await fetch('/users/sign_out', {
         method: 'DELETE',
@@ -49,7 +53,9 @@ const Header: React.FC = () => {
       if (response.ok) {
         setIsLoggedIn(false); // ログイン状態をfalseに設定
         setIsMenuOpen(false); // メニューを閉じる
-        navigate('/'); // トップページにリダイレクト
+        setTimeout(() => {
+          navigate('/');  // トップページにリダイレクト
+        }, 0);
         window.currentUser = false;
       } else {
         console.error('Logout failed');
@@ -82,11 +88,16 @@ const Header: React.FC = () => {
                   {isLoggedIn ? (
                     <>
                       <a href="/users/edit" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">プロフィール</a>
-                      <a href="/users/sign_out" data-method="delete" className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">ログアウト</a>
+                      <button
+                        onClick={handleLogout}  // ログアウトボタンにhandleLogoutを紐付ける
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        ログアウト
+                      </button>
                     </>
                   ) : (
                     <>
-                      <a href="/users/sign_in" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">ログイン</a>
+                      <a href="/users/sign_in" data-turbo="false" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">ログイン</a>
                       <a href="/users/sign_up" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">新規登録</a>
                     </>
                   )}

@@ -1,1 +1,9 @@
+<%= content_for :head do %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+<% end %>
+
 <div id="thanks_app" data-thanks="<%= @thanks_json %>"></div>
+
+<script>
+  console.log('Rails data:', <%= raw @thanks_json %>);
+</script>

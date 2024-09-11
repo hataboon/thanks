@@ -6,6 +6,8 @@ class ThanksController < ApplicationController
     if current_user
       @thanks = current_user.thanks.order(date: :desc)
       @thanks_json = @thanks.to_json
+      puts "Debug: @thanks_json = #{@thanks_json}" # デバッグ用
+
     else
       @thanks = []
       @thanks_json = [].to_json

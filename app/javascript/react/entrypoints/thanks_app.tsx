@@ -1,13 +1,13 @@
 import React from "react";
-import { createRoot } from "react-dom/client"; //createRoot: React 18から導入された新しいAPIで、Reactアプリケーションのルートを作成します。
+import { createRoot } from "react-dom/client";
 import Thanks from "../features/thanks";
-import Header from "../components/Header";
+import Header from "../components/Header";  // Headerをインポート
 import { BrowserRouter as Router } from "react-router-dom"
 
 const App = () => (
   <Router>
     <div className="min-h-screen bg-gray-100">
-      <Header />
+      <Header />  {/* ヘッダーを追加 */}
       <main className="container mx-auto mt-6 px-4">
         <Thanks />
       </main>
@@ -15,9 +15,23 @@ const App = () => (
   </Router>
 );
 
-const container = document.getElementById("thanks_app");
-if (container) { // containerが存在する場合のみ、以下のコードを実行します。
-  const root = createRoot(container); // 取得した要素にReactアプリケーションのルートを作成します。
-  root.render(<App />);
-}
+let root: any;
 
+const renderApp = () => {
+  const container = document.getElementById("thanks_app");
+  if (container) {
+    if (!root) {
+      console.log("Container found, rendering React app");
+      root = createRoot(container);
+      root.render(<App />);
+    } else {
+      console.log("React app already rendered, updating");
+      root.render(<App />);
+    }
+  } else {
+    console.error("Container not found");
+  }
+};
+
+document.addEventListener('turbo:load', renderApp);
+document.addEventListener('turbo:render', renderApp);

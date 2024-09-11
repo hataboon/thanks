@@ -23,6 +23,8 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
 
   useEffect(() => {
     const thanksData = JSON.parse(document.getElementById('thanks_app')?.getAttribute('data-thanks') || '[]');
+    console.log(thanksData); // デバッグ用
+
     setEntries(thanksData);
   }, []);
 
