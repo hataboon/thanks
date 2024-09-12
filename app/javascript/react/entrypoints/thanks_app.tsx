@@ -29,7 +29,7 @@ const renderApp = () => {
       root.render(<App />);
     }
   } else {
-    console.error("Container not found");
+    console.log("Container not found");
   }
 };
 
