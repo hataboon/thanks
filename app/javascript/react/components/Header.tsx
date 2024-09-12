@@ -5,7 +5,6 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const checkStatus = () => {
@@ -13,16 +12,16 @@ const Header: React.FC = () => {
     };
 
     checkStatus();
-  },[]);
+  }, []);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
-    }
-  };
+      }
+    };
 
-  document.addEventListener('mousedown', handleClick);
+    document.addEventListener('mousedown', handleClick);
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
@@ -53,9 +52,6 @@ const Header: React.FC = () => {
       if (response.ok) {
         setIsLoggedIn(false); // ログイン状態をfalseに設定
         setIsMenuOpen(false); // メニューを閉じる
-        setTimeout(() => {
-          navigate('/');  // トップページにリダイレクト
-        }, 0);
         window.currentUser = false;
       } else {
         console.error('Logout failed');
@@ -97,8 +93,9 @@ const Header: React.FC = () => {
                     </>
                   ) : (
                     <>
+                      {/* Turbo無効化を追加 */}
                       <a href="/users/sign_in" data-turbo="false" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">ログイン</a>
-                      <a href="/users/sign_up" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">新規登録</a>
+                      <a href="/users/sign_up" data-turbo="false" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">新規登録</a>
                     </>
                   )}
                 </div>

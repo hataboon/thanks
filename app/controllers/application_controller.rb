@@ -1,19 +1,22 @@
 class ApplicationController < ActionController::Base
+  # Modern browser support (省略しても大丈夫です)
   allow_browser versions: :modern
 
-  def after_sign_in_path_for(resource)
-    flash[:notice] = "ログインに成功しました" #　 <-任意で
-    root_path  #　指定したいパスに変更
+  # ログイン後のリダイレクト
+  def after_sign_in_path_for(resource_or_scope)
+    flash[:notice] = "ログインに成功しました"
+    root_path
   end
 
-  # サインアウト後のリダイレクト先をトップページへ
-  def after_sign_out_path_for(resource)
+  # ログアウト後のリダイレクト
+  def after_sign_out_path_for(resource_or_scope)
     flash[:alert] = "ログアウトしました"
     root_path
   end
 
-  def after_sign_up_path_for(resource)
-    flash[:notice] = "サインアップしました" #　 <-任意で
-    root_path  #　指定したいパスに変更
+  # サインアップ後のリダイレクト
+  def after_sign_up_path_for(resource_or_scope)
+    flash[:notice] = "サインアップしました"
+    root_path
   end
 end
