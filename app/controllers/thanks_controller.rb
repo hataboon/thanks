@@ -1,6 +1,6 @@
 class ThanksController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :destroy]
-  before_action :set_thank, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [ :new, :create, :destroy ]
+  before_action :set_thank, only: [ :edit, :update, :destroy ]
 
   def index
     if current_user
@@ -21,7 +21,7 @@ class ThanksController < ApplicationController
   def create
     @thank = current_user.thanks.new(thank_params)
     if @thank.save
-      redirect_to thanks_path, notice: '感謝しました'
+      redirect_to thanks_path, notice: "感謝しました"
     else
       render :new
     end
@@ -32,7 +32,7 @@ class ThanksController < ApplicationController
 
   def update
     if @thank.update(thank_params)
-      redirect_to thanks_path, notice: '更新されました'
+      redirect_to thanks_path, notice: "更新されました"
     else
       render :edit
     end
@@ -40,7 +40,7 @@ class ThanksController < ApplicationController
 
   def destroy
     @thank.destroy
-    redirect_to thanks_path, notice: '削除されました'
+    redirect_to thanks_path, notice: "削除されました"
   end
 
   private

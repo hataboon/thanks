@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ThanksControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers  # 追加
+
   setup do
     @user = users(:one)  # テストユーザーをセット
     sign_in @user        # テストユーザーでログイン

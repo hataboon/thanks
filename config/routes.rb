@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root "thanks#index"
 
   # Thanksリソースのルートを定義
-  resources :thanks, except: [:new, :edit]
+  resources :thanks, except: [ :new, :edit ]
 
   # ヘルスチェック
   get "up" => "rails/health#show", as: :rails_health_check
