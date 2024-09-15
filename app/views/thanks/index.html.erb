@@ -4,6 +4,11 @@
 
 <div id="thanks_app" data-thanks="<%= @thanks_json %>"></div>
 
+<!-- 招待するボタン -->
+<div class="invite-button-container">
+  <%= link_to '招待する', new_invitation_path, class: "btn btn-primary" %>
+</div>
+
 <script>
   console.log('Rails data:', <%= raw @thanks_json %>);
 </script>
