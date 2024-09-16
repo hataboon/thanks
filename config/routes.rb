@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "invitations/new"
+  get "invitations/create"
   # Deviseのルートを追加
   devise_for :users
 

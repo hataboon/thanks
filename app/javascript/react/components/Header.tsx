@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,6 +68,15 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <Link to="/" className="text-xl font-bold text-gray-800">感謝日記</Link>
           </div>
+          <div className="flex items-center">
+            <a
+              href="/invitations/new"  // Railsの招待機能にリンク
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+            >
+              招待する
+            </a>
+          </div>
+
           <div className="flex items-center">
             <div className="relative" ref={menuRef}>
               <button
