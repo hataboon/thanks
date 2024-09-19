@@ -5,6 +5,24 @@ import Modal from "../../components/Modal"; // モーダルコンポーネント
 import useModal from "./useModal"; // カスタム useModal フックをインポート
 import DiaryEntry from "./../../components/DiaryEntry";  // 新しく追加
 
+// カテゴリごとの感謝をスライダー形式で表示するコンポーネントを追加
+const CategorySlider: React.FC<{ entries: Entry[], category: string }> = ({ entries, category }) => {
+  // 特定のカテゴリに属する感謝エントリーをフィルタリング
+  const filteredEntries = entries.filter(entry => entry.category === category);
+
+  return (
+    <div className="category-section mb-8">
+      <h2 className="text-xl font-bold mb-4">{category}</h2>
+      <div className="slider-container flex overflow-x-auto space-x-4"> {/* 横方向にスクロール可能にする */}
+        {filteredEntries.map((entry) => (
+          <div key={entry.id} className="min-w-[200px]"> {/* 各エントリーを横並びに表示 */}
+            <DiaryEntry entry={entry} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // 初期エントリーデータ
 const initialEntries: Entry[] = [];
@@ -23,8 +41,6 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
 
   useEffect(() => {
     const thanksData = JSON.parse(document.getElementById('thanks_app')?.getAttribute('data-thanks') || '[]');
-    console.log(thanksData); // デバッグ用
-
     setEntries(thanksData);
   }, []);
 
@@ -107,12 +123,10 @@ export default function Thanks() { // Thanks コンポーネントの定義、�
         <button onClick={addEntry} className="bg-blue-500 text-white px-4 py-2 rounded">保存</button> {/* エントリーを追加するボタン */}
       </Modal>
 
-      <h2 className="text-2xl font-bold mb-6">過去の感謝</h2>
-        <div className="space-y-4"> {/* グリッドレイアウトを適用 */}
-          {entries.map((entry) => (
-            <DiaryEntry key={entry.id} entry={entry} onEdit={startEditing} onDelete={deleteEntry} />
-          ))}
-        </div>
+       {/* カテゴリごとの感謝エントリを表示 */}
+       {categories.map((category) => (
+          <CategorySlider key={category.id} entries={entries} category={category.name} />
+        ))}
       </div>
     </div>
   );
