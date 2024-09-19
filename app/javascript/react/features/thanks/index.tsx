@@ -130,6 +130,13 @@ export default function Thanks() {
             <DiaryEntry key={entry.id} entry={entry} />
           ))}
         </div>
+        {/* カテゴリの下に追加ボタンを表示 */}
+        <button
+                onClick={openAddCategoryModal}
+                className="bg-green-500 text-white px-4 py-2 rounded mt-4"
+              >
+                {category.name} にカテゴリを追加
+              </button>
       </div>
     </div>
   );
